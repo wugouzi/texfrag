@@ -242,11 +242,8 @@ If VAL is a widget instead of a string (widget-value val) is tested."
       widget)))
 
 (defcustom texfrag-LaTeX-frag-alist
-  '(("\\$\\$" "\\$\\$" "$$" "$$" :display t)
-    ("\\$" "\\$" "$" "$")
-    ("\\\\\\[" "\\\\\\]" "\\\\[" "\\\\]" :display t)
-    ("\\\\(" "\\\\)" "\\\\(" "\\\\)")
-    ("\\\\begin{\\([a-z*]+\\)}" "\\\\end{\\1}" "\\\\begin{\\2}" "\\\\end{\\2}" :display t)
+  ;;'(("\\\\begin{\\([a-z*]+\\)}" "\\\\end{\\1}" "\\\\begin{\\2}" "\\\\end{\\2}" :display t)
+  '(("\\\\begin{\\(tikzcd\\)}" "\\\\end{\\1}" "\\\\begin{\\2}" "\\\\end{\\2}" :display t)
     )
   "`texfrag-frag-alist' for LaTeX."
   :group 'texfrag
@@ -404,7 +401,7 @@ returns:
     re))
 ;; Test:
 ;; (string-equal "\\(ba\\)zz.*ooG\\1" (let ((str "foo bar")) (string-match "f\\(o+\\)" str) (texfrag-combine-regexps "\\(ba\\)zz.*\\1G\\2" (match-data) str)))
-;; 
+;;
 
 (defun texfrag-combine-match-data (&rest args)
   "Combines the match data in ARGS of multiple `string-match' commands.
@@ -1276,11 +1273,7 @@ Formulas can be LaTeX fragments or LaTeX environments."
 (defun texfrag-org ()
   "Texfrag setup for `org-mode'."
   (setq texfrag-frag-alist
-	'((("\\$\\$" texfrag-org-latex-p) "\\$\\$" "$$" "$$" :display t)
-	  (("\\$" texfrag-org-latex-p) "\\$" "$" "$")
-          (("\\\\(" texfrag-org-latex-p) "\\\\)" "$" "$")
-	  (("\\\\\\[" texfrag-org-latex-p) "\\\\\\]" "\\\\[" "\\\\]" :display t)
-          (("\\\\begin{\\([a-z*]+\\)}" texfrag-org-latex-p) "\\\\end{\\1}" "\\\\begin{\\2}" "\\\\end{\\2}" :display t))
+	'((("\\\\begin{\\(tikzcd\\)}" texfrag-org-latex-p) "\\\\end{\\1}" "\\\\begin{\\2}" "\\\\end{\\2}" :display t))
 	texfrag-comments-only nil
         texfrag-header-function #'texfrag-org-header
         org-html-with-latex 'dvipng) ;; Export of LaTeX formulas as embedded formulas only works this way.
